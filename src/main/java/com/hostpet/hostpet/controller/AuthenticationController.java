@@ -1,9 +1,9 @@
 package com.hostpet.hostpet.controller;
 
 
-import com.hostpet.hostpet.entity.AuthenticationDTO;
-import com.hostpet.hostpet.entity.LoginResponseDTO;
-import com.hostpet.hostpet.entity.RegisterDTO;
+import com.hostpet.hostpet.dtos.AuthenticationDTO;
+import com.hostpet.hostpet.dtos.LoginResponseDTO;
+import com.hostpet.hostpet.dtos.RegisterDTO;
 import com.hostpet.hostpet.entity.User;
 import com.hostpet.hostpet.repository.UserRepository;
 import com.hostpet.hostpet.security.TokenService;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("auth")
-public class authenticationController {
+public class AuthenticationController {
     @Autowired
     private AuthenticationManager authenticationManager;
 

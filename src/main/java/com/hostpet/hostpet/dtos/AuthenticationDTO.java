@@ -1,4 +1,4 @@
-package com.hostpet.hostpet.entity;
+package com.hostpet.hostpet.dtos;
 
 public record AuthenticationDTO(String username , String password) {
 }
