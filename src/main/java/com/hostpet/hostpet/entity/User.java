@@ -3,7 +3,6 @@ package com.hostpet.hostpet.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,20 +16,48 @@ import java.util.List;
 @Getter // Gera automaticamente os getters
 @Setter // Gera automaticamente os setters
 @AllArgsConstructor // Gera o construtor com todos os campos
+
+
+
 public class User implements UserDetails {
 
+
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto incremento
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 50)
-    private String username;
 
     @Column(nullable = false, unique = true, length = 100)
     private String email;
 
     @Column(nullable = false)
     private String password;
+    
+
+    @Column(nullable = false)
+    private UserRole role;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Cliente> clientes;
+
+
+    //Construtor
+
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+        this.role = UserRole.ADMIN; // Sempre define como ADMIN
+    }
+
+    public User() {
+    }
+
+
+
+
+    //Get e set
+
 
     public Long getId() {
         return id;
@@ -38,11 +65,8 @@ public class User implements UserDetails {
 
     public void setId(Long id) {
         this.id = id;
-    }
+    }    
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public String getEmail() {
         return email;
@@ -60,10 +84,7 @@ public class User implements UserDetails {
         return role;
     }
 
-    public void setRole(UserRole role) {
-        this.role = role;
-    }
-
+    
     public List<Cliente> getClientes() {
         return clientes;
     }
@@ -72,29 +93,15 @@ public class User implements UserDetails {
         this.clientes = clientes;
     }
 
-    @Column(nullable = false)
-    private UserRole role;
+    //========================================
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Cliente> clientes;
-
-    public User(String username, String email, String password, UserRole role) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-    }
-
-    public User() {
-    }
-
-
-
+    // Dados utilizados pelos UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"),new SimpleGrantedAuthority("ROLE_USER"));
-        else return  List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        // Sempre retorna "ROLE_ADMIN" para todos os usuários
+        return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
     }
+    
 
     @Override
     public String getPassword() {
@@ -103,7 +110,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override
@@ -125,6 +132,7 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 
 
 }

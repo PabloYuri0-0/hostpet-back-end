@@ -19,32 +19,37 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class securityConfiguration {
 
     @Autowired
+    // Filtro de segurança customizado para autenticação
     SecurityFilter securityFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+
+        // Configurações de segurança HTTP
         return httpSecurity
-                .csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorize -> authorize
+                .csrf(csrf -> csrf.disable()) // Desabilita a proteção CSRF, pois estamos utilizando autenticação baseada em token
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Define a política de sessão para sem estado (sem cookies de sessão)
+                .authorizeHttpRequests(authorize -> authorize // Configura as permissões de acesso
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                         .requestMatchers(HttpMethod.POST,"/createUser").hasRole("ADMIN")
-                        .anyRequest().authenticated()
+                        .anyRequest().authenticated() // Exige autenticação para todas as outras requisições
                 )
                 .headers(headers -> headers.frameOptions().sameOrigin())
-                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)// Adiciona o filtro de segurança customizado antes do filtro padrão de autenticação
                 .build();
     }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+         // Cria o AuthenticationManager a partir da configuração de autenticação
         return  authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
+         // Cria um codificador de senhas BCrypt, para garantir que as senhas sejam armazenadas de forma segura
         return  new BCryptPasswordEncoder();
     }
 }

@@ -1,5 +1,8 @@
 package com.hostpet.hostpet.entity;
 
+
+// Caso futuramente precise de implementação
+
 public enum UserRole {
     ADMIN("admin"),
     USER("user");
