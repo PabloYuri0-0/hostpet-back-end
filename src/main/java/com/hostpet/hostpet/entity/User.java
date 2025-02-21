@@ -16,7 +16,6 @@ import java.util.List;
 @Table(name = "users") // Nome da tabela no banco
 @Getter // Gera automaticamente os getters
 @Setter // Gera automaticamente os setters
-@NoArgsConstructor // Gera o construtor padrão
 @AllArgsConstructor // Gera o construtor com todos os campos
 public class User implements UserDetails {
 
@@ -85,6 +84,10 @@ public class User implements UserDetails {
         this.password = password;
         this.role = role;
     }
+
+    public User() {
+    }
+
 
 
     @Override
