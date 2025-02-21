@@ -27,15 +27,7 @@ public class UserController {
         return user.isPresent() ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
-        try {
-            User user = userService.updateUser(id, updatedUser);
-            return ResponseEntity.ok(user);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
+    
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteUser(@PathVariable Long id) {

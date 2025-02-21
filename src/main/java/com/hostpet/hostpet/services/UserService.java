@@ -22,14 +22,7 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public User updateUser(Long id, User updatedUser) {
-        return userRepository.findById(id).map(user -> {
-            
-            user.setEmail(updatedUser.getEmail());
-            user.setRole(updatedUser.getRole());
-            return userRepository.save(user);
-        }).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-    }
+   
 
     public ResponseEntity<Object> deleteUser(Long id) {
         return userRepository.findById(id).map(user -> {

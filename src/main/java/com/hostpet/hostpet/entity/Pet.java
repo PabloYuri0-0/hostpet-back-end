@@ -9,6 +9,8 @@ import lombok.Setter;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "pets")
 @Getter
@@ -26,6 +28,7 @@ public class Pet {
 
     @ManyToOne
     @JoinColumn(name = "id_cliente")
+    @JsonBackReference
     private Cliente cliente;
 
     @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
