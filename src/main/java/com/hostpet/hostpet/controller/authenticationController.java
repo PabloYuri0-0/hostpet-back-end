@@ -2,9 +2,11 @@ package com.hostpet.hostpet.controller;
 
 
 import com.hostpet.hostpet.entity.AuthenticationDTO;
+import com.hostpet.hostpet.entity.LoginResponseDTO;
 import com.hostpet.hostpet.entity.RegisterDTO;
 import com.hostpet.hostpet.entity.User;
 import com.hostpet.hostpet.repository.UserRepository;
+import com.hostpet.hostpet.security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,12 +24,16 @@ public class authenticationController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data){
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(),data.password());
+        var usernamePassword = new UsernamePasswordAuthenticationToken(data.username(),data.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
-        return ResponseEntity.ok().build();
+        var token = tokenService.genarateToken((User) auth.getPrincipal());
+        return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
     @PostMapping("/register")
