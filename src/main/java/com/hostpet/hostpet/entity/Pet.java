@@ -1,6 +1,7 @@
 package com.hostpet.hostpet.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,5 +33,22 @@ public class Pet {
     private Cliente cliente;
 
     @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Agendamento> agendamentos;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
 }

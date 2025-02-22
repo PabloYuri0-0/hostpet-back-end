@@ -1,4 +1,5 @@
 package com.hostpet.hostpet.entity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,5 +32,24 @@ public class Agendamento {
 
     @ManyToOne
     @JoinColumn(name = "id_Baia")
+
+
     private Baia baia;
+
+
+    public Baia getBaia() {
+        return baia;
+    }
+
+    public void setBaia(Baia baia) {
+        this.baia = baia;
+    }
+
+    public Pet getPet() {
+        return pet;
+    }
+
+    public void setPet(Pet pet) {
+        this.pet = pet;
+    }
 }
