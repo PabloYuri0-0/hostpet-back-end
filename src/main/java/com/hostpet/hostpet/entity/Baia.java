@@ -1,4 +1,6 @@
 package com.hostpet.hostpet.entity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,5 +23,14 @@ public class Baia {
     private String status = "Livre";
 
     @OneToMany(mappedBy = "baia", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Agendamento> agendamentos;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

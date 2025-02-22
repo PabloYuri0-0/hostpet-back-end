@@ -34,6 +34,8 @@ public class securityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                         .requestMatchers(HttpMethod.POST,"/createUser").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/baia").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/pet").hasRole("ADMIN")
                         .anyRequest().authenticated() // Exige autenticação para todas as outras requisições
                 )
                 .headers(headers -> headers.frameOptions().sameOrigin())
