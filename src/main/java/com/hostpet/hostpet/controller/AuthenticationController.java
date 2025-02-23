@@ -5,10 +5,12 @@ import com.hostpet.hostpet.dtos.AuthenticationDTO;
 import com.hostpet.hostpet.dtos.LoginResponseDTO;
 import com.hostpet.hostpet.dtos.RegisterDTO;
 import com.hostpet.hostpet.entity.User;
+import com.hostpet.hostpet.exceptions.CustomException;
 import com.hostpet.hostpet.repository.UserRepository;
 import com.hostpet.hostpet.security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -45,10 +47,12 @@ public class AuthenticationController {
 
     // Endpoint para registro de um novo usuário, recebe dados e salva no banco
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid RegisterDTO data){
+    public ResponseEntity register(@RequestBody @Valid RegisterDTO data)  {
 
         // Verifica se o e-mail já está registrado
-        if (this.userRepository.findByEmail(data.email()) != null) return ResponseEntity.badRequest().build();
+        if (this.userRepository.findByEmail(data.email()) != null) {
+            throw new CustomException("E-mail já registrado", HttpStatus.BAD_REQUEST);
+        }
 
         // Criptografa a senha usando BCrypt
         String encryptadPassword = new BCryptPasswordEncoder().encode(data.password());
