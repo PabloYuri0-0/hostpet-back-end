@@ -1,6 +1,5 @@
 package com.hostpet.hostpet.security;
 
-import com.hostpet.hostpet.config.CustomCorsConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,18 +22,14 @@ public class securityConfiguration {
     // Filtro de segurança customizado para autenticação
     SecurityFilter securityFilter;
 
-    @Autowired
-    CustomCorsConfiguration customCorsConfiguration;
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-
-        // Configurações de segurança HTTP
         return httpSecurity
-                .csrf(csrf -> csrf.disable()) // Desabilita a proteção CSRF, pois estamos utilizando autenticação baseada em token
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Define a política de sessão para sem estado (sem cookies de sessão)
-                .authorizeHttpRequests(authorize -> authorize // Configura as permissões de acesso
-                        .requestMatchers("/h2-console/**").permitAll() // Permite acesso ao console do H2
+                .cors(cors -> cors.configure(httpSecurity))
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                         .requestMatchers(HttpMethod.POST,"/createUser").hasRole("ADMIN")
@@ -42,7 +37,6 @@ public class securityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/pet").hasRole("ADMIN")
                         .anyRequest().authenticated() // Exige autenticação para todas as outras requisições
                 )
-                .cors(cors -> cors.configurationSource(customCorsConfiguration)) // Configuração de CORS personalizada
                 .headers(headers -> headers.frameOptions().sameOrigin())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)// Adiciona o filtro de segurança customizado antes do filtro padrão de autenticação
                 .build();
