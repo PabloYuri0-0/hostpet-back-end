@@ -24,7 +24,7 @@ public class securityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .cors(cors -> cors.configure(httpSecurity)) // Habilita o CORS usando as configs do application.properties
+                .cors(cors -> cors.configure(httpSecurity))
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
