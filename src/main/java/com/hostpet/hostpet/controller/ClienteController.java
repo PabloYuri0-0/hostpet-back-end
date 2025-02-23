@@ -18,7 +18,8 @@ public class ClienteController {
     @Autowired
     private ClienteService clienteService;
 
-    @PostMapping
+
+    @PostMapping("/auth/register")
     public ResponseEntity<Cliente> cadastrarCliente(@RequestBody @Valid ClienteForm clienteForm) {
         return ResponseEntity.ok(clienteService.cadastrarCliente(clienteForm));
     }
