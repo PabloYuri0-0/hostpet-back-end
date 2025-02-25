@@ -19,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class securityConfiguration {
 
     @Autowired
+    // Filtro de segurança customizado para autenticação
     SecurityFilter securityFilter;
 
     @Bean
@@ -31,24 +32,25 @@ public class securityConfiguration {
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/createUser").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST,"/createUser").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/baia").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/pet").hasRole("ADMIN")
-                        .anyRequest().authenticated()
+                        .anyRequest().authenticated() // Exige autenticação para todas as outras requisições
                 )
                 .headers(headers -> headers.frameOptions().sameOrigin())
-                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)// Adiciona o filtro de segurança customizado antes do filtro padrão de autenticação
                 .build();
     }
 
-
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
+         // Cria o AuthenticationManager a partir da configuração de autenticação
+        return  authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    public PasswordEncoder passwordEncoder(){
+         // Cria um codificador de senhas BCrypt, para garantir que as senhas sejam armazenadas de forma segura
+        return  new BCryptPasswordEncoder();
     }
 }

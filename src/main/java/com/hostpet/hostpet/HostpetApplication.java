@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class HostpetApplication {
 
 	public static void main(String[] args) {
-
 		SpringApplication.run(HostpetApplication.class, args);
 	}
 
