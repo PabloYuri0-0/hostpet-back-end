@@ -1,4 +1,4 @@
-# 🏨🐶 HostPet
+# 🐾 HostPet
 
 Bem-vindo ao **HostPet**! Este é um sistema de gerenciamento para hotéis pet, permitindo o cadastro de clientes e seus pets, agendamentos de hospedagem, controle de disponibilidade das baias e gestão financeira. O projeto foi desenvolvido com **Spring Boot** e **SQLite**.
 
@@ -130,5 +130,5 @@ mvn clean install
 ---
 
 ## 🎯 Sobre o Projeto
-Este projeto foi desenvolvido com foco na administração de hotéis para pets, garantindo um controle eficiente de clientes, pets e hospedagens.
+Este repositório tem como foco o back-end da aplicação HostPet, que visa o gerenciamento de hotéis para pets. Ele foi desenvolvido utilizando Spring Boot e SQLite, garantindo funcionalidades como cadastro de clientes e pets, agendamento de hospedagem, controle de disponibilidade de baias e gestão financeira.
 
