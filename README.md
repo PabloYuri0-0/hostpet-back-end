@@ -1,8 +1,8 @@
-# 🐾 HostPet
+# 🏨🐶 HostPet
 
 Bem-vindo ao **HostPet**! Este é um sistema de gerenciamento para hotéis pet, permitindo o cadastro de clientes e seus pets, agendamentos de hospedagem, controle de disponibilidade das baias e gestão financeira. O projeto foi desenvolvido com **Spring Boot** e **SQLite**.
 
-## 🚀 Tecnologias Utilizadas
+## ⚙️ Tecnologias Utilizadas
 - **Java 17** + **Spring Boot**
 - **Spring Security** (Autenticação com JWT)
 - **SQLite** (Banco de dados)
@@ -11,32 +11,32 @@ Bem-vindo ao **HostPet**! Este é um sistema de gerenciamento para hotéis pet, 
 
 ---
 
-## 📌 Como Rodar o Projeto
+## 🚀 Como Rodar o Projeto
 
-### 1⃣ Pré-requisitos
+### 📌 Pré-requisitos
 Antes de começar, certifique-se de ter:
 - **Java 17** ou superior instalado
 - **Maven** configurado
 - **IntelliJ IDEA** (ou outra IDE de sua escolha)
 
-### 2⃣ Clonar o repositório
+### 📂 Clonar o repositório
 ```sh
 git clone https://github.com/seu-usuario/HostPet.git
 cd HostPet
 ```
 
-### 3⃣ Configurar o ambiente
+### 🔧 Configurar o ambiente
 O banco de dados utilizado é o **SQLite**, então ele já está embutido no projeto e não requer instalação separada.
 
 Caso precise, verifique a configuração do banco no arquivo `application.properties`:
 ```properties
-spring.datasource.url=jdbc:sqlite:hostpet.db
+spring.datasource.url=jdbc:sqlite:src/main/resources/banco.db
 spring.datasource.driver-class-name=org.sqlite.JDBC
-spring.jpa.database-platform=org.hibernate.dialect.SQLiteDialect
+spring.jpa.database-platform=org.hibernate.community.dialect.SQLiteDialect
 spring.jpa.hibernate.ddl-auto=update
 ```
 
-### 4⃣ Executar o projeto
+### ▶️ Executar o projeto
 No IntelliJ IDEA, basta rodar a classe principal:
 ```sh
 mvn spring-boot:run
@@ -76,15 +76,59 @@ mvn clean install
 
 ---
 
-## 📌 Observações
-- O banco de dados **SQLite** gera um arquivo `hostpet.db` na raiz do projeto.
+## 📦 Dependências Utilizadas
+```xml
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.xerial</groupId>
+        <artifactId>sqlite-jdbc</artifactId>
+        <version>3.41.2.1</version>
+    </dependency>
+    <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt-api</artifactId>
+        <version>0.11.5</version>
+    </dependency>
+    <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt-impl</artifactId>
+        <version>0.11.5</version>
+        <scope>runtime</scope>
+    </dependency>
+    <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt-jackson</artifactId>
+        <version>0.11.5</version>
+        <scope>runtime</scope>
+    </dependency>
+</dependencies>
+```
+
+---
+
+## 📝 Observações
+- O banco de dados **SQLite** gera um arquivo `banco.db` na raiz do projeto.
 - Para visualizar o banco de dados, use ferramentas como **DBeaver**.
-- Caso precise resetar os dados, basta excluir `hostpet.db` e reiniciar a aplicação.
+- Caso precise resetar os dados, basta excluir `banco.db` e reiniciar a aplicação.
 
 ---
 
 ## 🎯 Sobre o Projeto
 Este projeto foi desenvolvido com foco na administração de hotéis para pets, garantindo um controle eficiente de clientes, pets e hospedagens.
-
-Se tiver dúvidas ou sugestões, entre em contato! 🚀🐶🐱
 
