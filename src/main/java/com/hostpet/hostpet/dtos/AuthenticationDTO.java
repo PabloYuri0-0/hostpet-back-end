@@ -1,4 +1,8 @@
 package com.hostpet.hostpet.dtos;
 
-public record AuthenticationDTO(String email , String password) {
+import jakarta.validation.constraints.NotNull;
+
+public record AuthenticationDTO(@NotNull(message = "Email nao pode ser nulo") String email , String password) {
+
+
 }

@@ -31,6 +31,11 @@ public class ClienteService {
     }
 
 
+    public List<Cliente> listClientesByUser(Long userId) {
+        List<Cliente> clientes = clienteRepository.findByUserId(userId);
+        return clientes;
+
+    }
     public List<Cliente> listarClientes() {
         return clienteRepository.findAll();
     }
