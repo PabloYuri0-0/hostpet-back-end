@@ -3,6 +3,7 @@ package com.hostpet.hostpet.controller;
 
 import com.hostpet.hostpet.dtos.AuthenticationDTO;
 import com.hostpet.hostpet.dtos.LoginResponseDTO;
+import com.hostpet.hostpet.dtos.LoginResponseWithUserDTO;
 import com.hostpet.hostpet.dtos.RegisterDTO;
 import com.hostpet.hostpet.entity.User;
 import com.hostpet.hostpet.exceptions.CustomException;
@@ -32,19 +33,24 @@ public class AuthenticationController {
 
    // Endpoint para login, recebe credenciais, autentica e retorna um token JWT
     @PostMapping("/login")
-
-
-    public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data){
+    public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data) {
 
         // Cria um token de autenticação com e-mail e senha fornecidos
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(),data.password());
+        var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);  // Autentica as credenciais
- 
-         // Gera um token JWT para o usuário autenticado
-        var token = tokenService.genarateToken((User) auth.getPrincipal());
-        return ResponseEntity.ok(new LoginResponseDTO(token)); // Retorna o token no corpo da resposta
-    }
 
+        // Gera um token JWT para o usuário autenticado
+        var token = tokenService.genarateToken((User) auth.getPrincipal());
+
+        // Obtém o usuário autenticado
+        User authenticatedUser = (User) auth.getPrincipal();
+
+        // Cria a resposta com o token, id e email
+        LoginResponseWithUserDTO response = new LoginResponseWithUserDTO(token, authenticatedUser.getId(), authenticatedUser.getEmail());
+
+        // Retorna a resposta com token, id e email
+        return ResponseEntity.ok(response);
+    }
     // Endpoint para registro de um novo usuário, recebe dados e salva no banco
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Valid RegisterDTO data)  {
