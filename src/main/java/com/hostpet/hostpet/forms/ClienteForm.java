@@ -12,7 +12,6 @@ public class ClienteForm {
     public String nome;
 
     @NotBlank(message = "O telefone é obrigatório")
-    @Pattern(regexp = "\\(\\d{2}\\) \\d{4,5}-\\d{4}", message = "O telefone deve estar no formato (XX) XXXXX-XXXX")
     public String telefone;
 
     @NotNull(message = "O usuário é obrigatório")

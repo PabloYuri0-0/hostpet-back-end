@@ -18,13 +18,8 @@ import java.util.List;
 @Getter // Gera automaticamente os getters
 @Setter // Gera automaticamente os setters
 @AllArgsConstructor // Gera o construtor com todos os campos
-
-
-
 public class User implements UserDetails {
 
-
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto incremento
     private Long id;
@@ -35,7 +30,7 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private String password;
-    
+
 
     @Column(nullable = false)
     private UserRole role;
@@ -43,6 +38,10 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Cliente> clientes;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Baia> baias;
 
 
     //Construtor
@@ -57,8 +56,6 @@ public class User implements UserDetails {
     }
 
 
-
-
     //Get e set
 
 
@@ -68,7 +65,7 @@ public class User implements UserDetails {
 
     public void setId(Long id) {
         this.id = id;
-    }    
+    }
 
 
     public String getEmail() {
@@ -87,7 +84,7 @@ public class User implements UserDetails {
         return role;
     }
 
-    
+
     public List<Cliente> getClientes() {
         return clientes;
     }
@@ -104,7 +101,7 @@ public class User implements UserDetails {
         // Sempre retorna "ROLE_ADMIN" para todos os usuários
         return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
     }
-    
+
 
     @Override
     public String getPassword() {
@@ -135,7 +132,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
 
 
 }
