@@ -31,6 +31,12 @@ public class PetController {
         return ResponseEntity.ok(petService.getAllPets());
     }
 
+    //Endpoint para Editar um pet
+    @PutMapping("/{id}")
+    public ResponseEntity<Pet> atualizarPet(@PathVariable Integer id, @RequestBody Pet petAtualizado) {
+        return ResponseEntity.ok(petService.updatePet(id, petAtualizado));
+    }
+
     // Endpoint para excluir um Pet
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluirPet(@PathVariable Integer id) {

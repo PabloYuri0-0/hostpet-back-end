@@ -45,7 +45,34 @@ public class PetService {
             throw new IllegalArgumentException("Cliente não informado");
         }
 
+
+
         return petRepository.save(pet);
+    }
+
+
+    // Metodo para atualizar um pet
+    public Pet updatePet(Integer id, Pet petAtualizado){
+        Pet petExistente = petRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Pet não encontrado"));
+
+        // Atualiza apenas os campos informados
+        if (petAtualizado.getNome() != null) {
+            petExistente.setNome(petAtualizado.getNome());
+        }
+        if (petAtualizado.getSexo() != null) {
+            petExistente.setSexo(petAtualizado.getSexo());
+        }
+
+        if (petAtualizado.getRacaPet() != null) {
+            petExistente.setRacaPet(petAtualizado.getRacaPet());
+        }
+
+        if (petAtualizado.getObservacoes() != null) {
+            petExistente.setObservacoes(petAtualizado.getObservacoes());
+        }
+
+        return petRepository.save(petExistente);
     }
 
     // Método para excluir um Pet

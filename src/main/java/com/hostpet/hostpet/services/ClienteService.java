@@ -32,10 +32,16 @@ public class ClienteService {
 
 
     public List<Cliente> listClientesByUser(Long userId) {
-        List<Cliente> clientes = clienteRepository.findByUserId(userId);
-        return clientes;
+        // Verifica se o usuário existe
+        boolean usuarioExiste = userRepository.existsById(userId);
+        if (!usuarioExiste) {
+            throw new IllegalArgumentException("Usuário não encontrado ou não cadastrado.");
+        }
 
+        // Busca os clientes vinculados ao usuário
+        return clienteRepository.findByUserId(userId);
     }
+
     public List<Cliente> listarClientes() {
         return clienteRepository.findAll();
     }
