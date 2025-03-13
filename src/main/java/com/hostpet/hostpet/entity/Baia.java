@@ -20,6 +20,7 @@ public class Baia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String limpeza = "Limpa";
     private String descricao;
     private String status = "Livre";
 
@@ -31,6 +32,14 @@ public class Baia {
     @JoinColumn(name = "user_id")
     @JsonBackReference
     private User user;
+
+    public String getLimpeza() {
+        return limpeza;
+    }
+
+    public void setLimpeza(String limpeza) {
+        this.limpeza = limpeza;
+    }
 
     public String getDescricao() {
         return descricao;
