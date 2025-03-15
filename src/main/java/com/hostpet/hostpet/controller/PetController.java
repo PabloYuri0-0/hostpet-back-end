@@ -26,9 +26,16 @@ public class PetController {
     }
 
     // Endpoint para listar todos os Pets
+//    @GetMapping
+//    public ResponseEntity<List<Pet>> listarPets() {
+//        return ResponseEntity.ok(petService.getAllPets());
+//    }
+
     @GetMapping
-    public ResponseEntity<List<Pet>> listarPets() {
-        return ResponseEntity.ok(petService.getAllPets());
+    public ResponseEntity<List<Pet>> listarPetsByUser(@RequestParam(required = true) Long userId,
+                                                      @RequestParam(required = false) String nome,
+                                                      @RequestParam(required = false) String sexo) {
+        return ResponseEntity.ok(petService.getPetsByUser(userId, nome, sexo));
     }
 
     //Endpoint para Editar um pet
