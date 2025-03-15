@@ -19,13 +19,13 @@ public class PetService {
     @Autowired
     private IClienteRepository clienteRepository;
 
-    public PetService(PetRepository petRepository, IClienteRepository clienteRepository) {
-        this.petRepository = petRepository;
-        this.clienteRepository = clienteRepository;
-    }
 
     public List<Pet> getAllPets() {
         return petRepository.findAll();
+    }
+
+    public List<Pet> getPetsByUser(Long userId, String nome, String sexo) {
+        return petRepository.findPetsWithFilters(userId, nome, sexo);
     }
 
     public Optional<Pet> getPetById(Integer id) {
