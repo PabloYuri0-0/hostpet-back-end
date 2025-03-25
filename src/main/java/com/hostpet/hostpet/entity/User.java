@@ -47,6 +47,9 @@ public class User implements UserDetails {
     @JsonManagedReference
     private List<Agendamento> agendamentos;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private ContaHotel contaHotel;
 
 
 
