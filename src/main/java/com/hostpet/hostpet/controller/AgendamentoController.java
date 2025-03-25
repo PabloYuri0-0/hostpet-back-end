@@ -1,6 +1,7 @@
 package com.hostpet.hostpet.controller;
 
 import com.hostpet.hostpet.entity.Agendamento;
+import com.hostpet.hostpet.entity.Cliente;
 import com.hostpet.hostpet.services.AgendamentoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +24,9 @@ public class AgendamentoController {
     }
 
     // Rota para listar todos os agendamentos
-    @GetMapping
-    public ResponseEntity<List<Agendamento>> listarAgendamentos() {
-        List<Agendamento> agendamentos = agendamentoService.listarAgendamentos();
-        return ResponseEntity.ok(agendamentos);
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<Agendamento>> listAgendamentosByUser(@PathVariable("id") Long userId) {
+        return ResponseEntity.ok(agendamentoService.listAgendamentosByUser(userId));
     }
 
     // Rota para buscar um agendamento por ID
