@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -28,6 +29,7 @@ public class ContaHotelService {
     public void adicionarEntrada(User user, BigDecimal valor) {
         ContaHotel conta = buscarPorUser(user);
         conta.setSaldo(conta.getSaldo().add(valor)); // Adiciona ao saldo atual
+        conta.setUltimaAtualizacao(LocalDateTime.now());
         contaHotelRepository.save(conta);
     }
 }

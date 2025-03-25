@@ -1,5 +1,6 @@
 package com.hostpet.hostpet.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -22,6 +23,7 @@ public class ContaHotel {
     private BigDecimal saldo ;
 
     @Column(nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss") // Adicione essa anotação
     private LocalDateTime ultimaAtualizacao = LocalDateTime.now();
 
     public Long getId() {
@@ -48,5 +50,11 @@ public class ContaHotel {
         this.saldo = saldo;
     }
 
+    public LocalDateTime getUltimaAtualizacao() {
+        return ultimaAtualizacao;
+    }
 
+    public void setUltimaAtualizacao(LocalDateTime ultimaAtualizacao) {
+        this.ultimaAtualizacao = ultimaAtualizacao;
+    }
 }
