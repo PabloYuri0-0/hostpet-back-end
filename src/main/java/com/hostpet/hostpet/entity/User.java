@@ -43,6 +43,12 @@ public class User implements UserDetails {
     @JsonManagedReference
     private List<Baia> baias;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Agendamento> agendamentos;
+
+
+
 
     //Construtor
 
