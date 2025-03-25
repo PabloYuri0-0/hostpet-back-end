@@ -3,9 +3,11 @@ package com.hostpet.hostpet.services;
 import com.hostpet.hostpet.entity.Agendamento;
 import com.hostpet.hostpet.entity.Baia;
 import com.hostpet.hostpet.entity.Pet;
+import com.hostpet.hostpet.entity.User;
 import com.hostpet.hostpet.repository.AgendamentoRepository;
 import com.hostpet.hostpet.repository.BaiaRepository;
 import com.hostpet.hostpet.repository.PetRepository;
+import com.hostpet.hostpet.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,9 @@ public class AgendamentoService {
     @Autowired
     private BaiaRepository baiaRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     // Método para salvar o agendamento
     public Agendamento salvarAgendamento(Agendamento agendamento) {
         // Verificar se o pet existe
@@ -40,13 +45,25 @@ public class AgendamentoService {
         }
         agendamento.setBaia(baiaOpt.get());
 
+        // Verificar se o usuário  existe
+        Optional<User> userOpt = userRepository.findById(agendamento.getUser().getId());
+        if (!userOpt.isPresent()) {
+            throw new IllegalArgumentException("Usuário não encontrado.");
+        }
+        agendamento.setUser(userOpt.get());
+
         // Salvar o agendamento no banco
         return agendamentoRepository.save(agendamento);
     }
 
     // Método para listar todos os agendamentos
-    public List<Agendamento> listarAgendamentos() {
-        return agendamentoRepository.findAll();
+    public List<Agendamento> listAgendamentosByUser(Long userId) {
+        // Verifica se o usuário existe
+        boolean usuarioExiste = userRepository.existsById(userId);
+        if (!usuarioExiste) {
+            throw new IllegalArgumentException("Usuário não encontrado ou não cadastrado.");
+        }
+        return agendamentoRepository.findByUserId(userId);
     }
 
     // Método para buscar um agendamento por ID
