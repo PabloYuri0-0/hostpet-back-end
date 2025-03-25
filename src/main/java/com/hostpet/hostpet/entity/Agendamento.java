@@ -1,4 +1,6 @@
 package com.hostpet.hostpet.entity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,11 +21,14 @@ public class Agendamento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dataHoraInicio;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dataHoraFim;
     private BigDecimal valor;
-    private String formaPagamento = "Não Informado";
-    private String statusPagamento = "Pendente";
+    private String formaPagamento = "";
+    private String statusPagamento = "";
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dataAgendamento;
 
     @ManyToOne
@@ -32,10 +37,17 @@ public class Agendamento {
 
     @ManyToOne
     @JoinColumn(name = "id_Baia")
-
-
     private Baia baia;
 
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
+    private User user;
+
+    public User getUser() {return user;}
+
+    public void setUser(User user) {this.user = user;}
 
     public Baia getBaia() {
         return baia;
