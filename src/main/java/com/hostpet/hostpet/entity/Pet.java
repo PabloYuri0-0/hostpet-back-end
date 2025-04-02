@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -26,6 +27,7 @@ public class Pet {
     private String sexo;
     private String racaPet;
     private String observacoes;
+    private LocalDate dtNascimento;
 
     @ManyToOne
     @JoinColumn(name = "id_cliente")
