@@ -1,6 +1,7 @@
 package com.hostpet.hostpet.controller;
 
 import com.hostpet.hostpet.entity.Pet;
+import com.hostpet.hostpet.forms.PetForm;
 import com.hostpet.hostpet.services.PetService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,8 @@ public class PetController {
 
     // Endpoint para cadastrar um novo Pet
     @PostMapping
-    public ResponseEntity<Pet> cadastrarPet(@RequestBody @Valid Pet pet) {
-        return ResponseEntity.ok(petService.savePet(pet));
+    public ResponseEntity<Pet> cadastrarPet(@RequestBody @Valid PetForm form) {
+        return ResponseEntity.ok(petService.savePet(form));
     }
 
     // Endpoint para listar todos os Pets
