@@ -15,8 +15,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("auth")
@@ -34,6 +37,10 @@ public class AuthenticationController {
    // Endpoint para login, recebe credenciais, autentica e retorna um token JWT
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data) {
+        Optional<UserDetails> optionalUser = Optional.ofNullable(userRepository.findByEmail(data.email()));
+        if(optionalUser.isEmpty()){
+            throw new CustomException("E-mail não registrado", HttpStatus.BAD_REQUEST);
+        }
 
         // Cria um token de autenticação com e-mail e senha fornecidos
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
