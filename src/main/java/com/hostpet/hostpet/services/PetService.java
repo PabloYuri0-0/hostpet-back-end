@@ -39,6 +39,7 @@ public class PetService {
         if (validCliente.isEmpty()) {
             throw new IllegalArgumentException("Cliente não encontrado");
         }
+
         Pet novoPet = new Pet();
         novoPet.setNome(pet.nome);
         novoPet.setSexo(pet.sexo);
