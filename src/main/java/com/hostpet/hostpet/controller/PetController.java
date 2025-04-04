@@ -1,5 +1,6 @@
 package com.hostpet.hostpet.controller;
 
+import com.hostpet.hostpet.dtos.PetsListDTO;
 import com.hostpet.hostpet.entity.Pet;
 import com.hostpet.hostpet.forms.PetForm;
 import com.hostpet.hostpet.services.PetService;
@@ -33,10 +34,11 @@ public class PetController {
 //    }
 
     @GetMapping
-    public ResponseEntity<List<Pet>> listarPetsByUser(@RequestParam(required = true) Long userId,
-                                                      @RequestParam(required = false) String nome,
-                                                      @RequestParam(required = false) String sexo) {
-        return ResponseEntity.ok(petService.getPetsByUser(userId, nome, sexo));
+    public ResponseEntity<List<PetsListDTO>> listarPetsByUser(@RequestParam(required = true) Long userId,
+                                                              @RequestParam(required = false) String nome,
+                                                              @RequestParam(required = false) String sexo) {
+
+        return ResponseEntity.ok(petService.getPetsByUser(userId,nome,sexo));
     }
 
     //Endpoint para Editar um pet
