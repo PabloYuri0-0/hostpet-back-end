@@ -1,7 +1,9 @@
 package com.hostpet.hostpet.services;
 
+import com.hostpet.hostpet.dtos.PetsListDTO;
 import com.hostpet.hostpet.entity.Cliente;
 import com.hostpet.hostpet.entity.Pet;
+import com.hostpet.hostpet.forms.PetForm;
 import com.hostpet.hostpet.repository.PetRepository;
 import com.hostpet.hostpet.repository.IClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +26,11 @@ public class PetService {
         return petRepository.findAll();
     }
 
-    public List<Pet> getPetsByUser(Long userId, String nome, String sexo) {
-        return petRepository.findPetsWithFilters(userId, nome, sexo);
+    public List<PetsListDTO> getPetsByUser(Long userId, String nome, String sexo) {
+        List<Pet> pets = petRepository.findPetsWithFilters(userId, nome, sexo);
+        return pets.stream()
+                .map(PetsListDTO::new)
+                .toList();
     }
 
     public Optional<Pet> getPetById(Integer id) {
@@ -33,21 +38,21 @@ public class PetService {
     }
 
     // Método para salvar o Pet e vinculá-lo ao Cliente
-    public Pet savePet(Pet pet) {
-        if (pet.getCliente() != null && pet.getCliente().getId() != null) {
-            Optional<Cliente> clienteOpt = clienteRepository.findById(pet.getCliente().getId());
-            if (clienteOpt.isEmpty()) {
-                throw new IllegalArgumentException("Cliente não encontrado");
-            }
-            // Associa o cliente ao pet
-            pet.setCliente(clienteOpt.get());
-        } else {
-            throw new IllegalArgumentException("Cliente não informado");
+    public Pet savePet(PetForm pet) {
+        Optional<Cliente> validCliente = clienteRepository.findById(pet.clienteId);
+        if (validCliente.isEmpty()) {
+            throw new IllegalArgumentException("Cliente não encontrado");
         }
 
+        Pet novoPet = new Pet();
+        novoPet.setNome(pet.nome);
+        novoPet.setSexo(pet.sexo);
+        novoPet.setRacaPet(pet.racaPet);
+        novoPet.setObservacoes(pet.observacoes);
+        novoPet.setDtNascimento(pet.dtNascimento);
+        novoPet.setCliente(validCliente.get());
 
-
-        return petRepository.save(pet);
+        return petRepository.save(novoPet);
     }
 
 
