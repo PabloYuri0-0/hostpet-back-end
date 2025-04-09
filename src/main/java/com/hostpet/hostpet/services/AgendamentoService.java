@@ -4,6 +4,7 @@ import com.hostpet.hostpet.entity.Agendamento;
 import com.hostpet.hostpet.entity.Baia;
 import com.hostpet.hostpet.entity.Pet;
 import com.hostpet.hostpet.entity.User;
+import com.hostpet.hostpet.forms.AgendamentoForm;
 import com.hostpet.hostpet.repository.AgendamentoRepository;
 import com.hostpet.hostpet.repository.BaiaRepository;
 import com.hostpet.hostpet.repository.PetRepository;
@@ -11,6 +12,7 @@ import com.hostpet.hostpet.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.List;
 
@@ -29,36 +31,39 @@ public class AgendamentoService {
     @Autowired
     private UserRepository userRepository;
 
-    // Método para salvar o agendamento
-    public Agendamento salvarAgendamento(Agendamento agendamento) {
-        // Verificar se o pet existe
-        Optional<Pet> petOpt = petRepository.findById(agendamento.getPet().getId());
-        if (!petOpt.isPresent()) {
+    public Agendamento saveAgendamento(AgendamentoForm form) {
+        Optional<Pet> petOpt = petRepository.findById(form.getIdPet());
+        if (petOpt.isEmpty()) {
             throw new IllegalArgumentException("Pet não encontrado.");
         }
-        agendamento.setPet(petOpt.get());
 
-        // Verificar se a baia existe
-        Optional<Baia> baiaOpt = baiaRepository.findById(agendamento.getBaia().getId());
-        if (!baiaOpt.isPresent()) {
+        Optional<Baia> baiaOpt = baiaRepository.findById(form.getIdBaia());
+        if (baiaOpt.isEmpty()) {
             throw new IllegalArgumentException("Baia não encontrada.");
         }
-        agendamento.setBaia(baiaOpt.get());
 
-        // Verificar se o usuário  existe
-        Optional<User> userOpt = userRepository.findById(agendamento.getUser().getId());
-        if (!userOpt.isPresent()) {
+        Optional<User> userOpt = userRepository.findById(form.getUserId());
+        if (userOpt.isEmpty()) {
             throw new IllegalArgumentException("Usuário não encontrado.");
         }
+
+        Agendamento agendamento = new Agendamento();
+        agendamento.setDataHoraInicio(form.getDataHoraInicio());
+        agendamento.setDataHoraFim(form.getDataHoraFim());
+        agendamento.setValor(form.getValor());
+        agendamento.setFormaPagamento(form.getFormaPagamento());
+        agendamento.setStatusPagamento(form.getStatusPagamento());
+        agendamento.setDataAgendamento(LocalDateTime.now());
+        agendamento.setPet(petOpt.get());
+        agendamento.setBaia(baiaOpt.get());
         agendamento.setUser(userOpt.get());
 
-        // Salvar o agendamento no banco
         return agendamentoRepository.save(agendamento);
     }
 
-    // Método para listar todos os agendamentos
+
+
     public List<Agendamento> listAgendamentosByUser(Long userId) {
-        // Verifica se o usuário existe
         boolean usuarioExiste = userRepository.existsById(userId);
         if (!usuarioExiste) {
             throw new IllegalArgumentException("Usuário não encontrado ou não cadastrado.");
@@ -66,13 +71,11 @@ public class AgendamentoService {
         return agendamentoRepository.findByUserId(userId);
     }
 
-    // Método para buscar um agendamento por ID
     public Agendamento buscarAgendamentoPorId(Integer id) {
         return agendamentoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Agendamento não encontrado"));
     }
 
-    // Método para excluir um agendamento
     public void excluirAgendamento(Integer id) {
         agendamentoRepository.deleteById(id);
     }
