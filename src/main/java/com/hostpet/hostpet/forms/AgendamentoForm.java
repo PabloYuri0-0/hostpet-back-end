@@ -31,6 +31,11 @@ public class AgendamentoForm {
     @Size(max = 50, message = "O status de pagamento deve ter no máximo 50 caracteres")
     private String statusPagamento;
 
+    @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    public LocalDateTime dataAgendamento;
+
+
     @NotNull(message = "O id do pet é obrigatório")
     private Integer idPet;
 
@@ -106,5 +111,13 @@ public class AgendamentoForm {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public LocalDateTime getDataAgendamento() {
+        return dataAgendamento;
+    }
+
+    public void setDataAgendamento(LocalDateTime dataAgendamento) {
+        this.dataAgendamento = dataAgendamento;
     }
 }
