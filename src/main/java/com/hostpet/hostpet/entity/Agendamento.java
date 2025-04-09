@@ -21,14 +21,11 @@ public class Agendamento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dataHoraInicio;
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dataHoraFim;
     private BigDecimal valor;
     private String formaPagamento = "";
     private String statusPagamento = "";
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dataAgendamento;
 
     @ManyToOne
@@ -45,24 +42,36 @@ public class Agendamento {
     @JsonBackReference
     private User user;
 
-    public User getUser() {return user;}
-
-    public void setUser(User user) {this.user = user;}
-
-    public Baia getBaia() {
-        return baia;
+    public Integer getId() {
+        return id;
     }
 
-    public void setBaia(Baia baia) {
-        this.baia = baia;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Pet getPet() {
-        return pet;
+    public LocalDateTime getDataHoraInicio() {
+        return dataHoraInicio;
     }
 
-    public void setPet(Pet pet) {
-        this.pet = pet;
+    public void setDataHoraInicio(LocalDateTime dataHoraInicio) {
+        this.dataHoraInicio = dataHoraInicio;
+    }
+
+    public LocalDateTime getDataHoraFim() {
+        return dataHoraFim;
+    }
+
+    public void setDataHoraFim(LocalDateTime dataHoraFim) {
+        this.dataHoraFim = dataHoraFim;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
     }
 
     public String getFormaPagamento() {
@@ -79,5 +88,37 @@ public class Agendamento {
 
     public void setStatusPagamento(String statusPagamento) {
         this.statusPagamento = statusPagamento;
+    }
+
+    public LocalDateTime getDataAgendamento() {
+        return dataAgendamento;
+    }
+
+    public void setDataAgendamento(LocalDateTime dataAgendamento) {
+        this.dataAgendamento = dataAgendamento;
+    }
+
+    public Pet getPet() {
+        return pet;
+    }
+
+    public void setPet(Pet pet) {
+        this.pet = pet;
+    }
+
+    public Baia getBaia() {
+        return baia;
+    }
+
+    public void setBaia(Baia baia) {
+        this.baia = baia;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
