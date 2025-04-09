@@ -1,5 +1,6 @@
 package com.hostpet.hostpet.controller;
 
+import com.hostpet.hostpet.dtos.FinanceiroEntradaDTO;
 import com.hostpet.hostpet.entity.Agendamento;
 import com.hostpet.hostpet.forms.AgendamentoForm;
 import com.hostpet.hostpet.services.AgendamentoService;
@@ -27,6 +28,11 @@ public class AgendamentoController {
     @GetMapping("/user/{id}")
     public ResponseEntity<List<Agendamento>> listAgendamentosByUser(@PathVariable("id") Long userId) {
         return ResponseEntity.ok(agendamentoService.listAgendamentosByUser(userId));
+    }
+
+    @GetMapping("/totais/pagos")
+    public ResponseEntity<FinanceiroEntradaDTO> getTotaisPagos() {
+        return ResponseEntity.ok(agendamentoService.getTotaisPagos());
     }
 
     @GetMapping("/{id}")

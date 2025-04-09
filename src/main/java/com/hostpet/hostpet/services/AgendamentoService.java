@@ -1,5 +1,6 @@
 package com.hostpet.hostpet.services;
 
+import com.hostpet.hostpet.dtos.FinanceiroEntradaDTO;
 import com.hostpet.hostpet.entity.Agendamento;
 import com.hostpet.hostpet.entity.Baia;
 import com.hostpet.hostpet.entity.Pet;
@@ -12,7 +13,10 @@ import com.hostpet.hostpet.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Optional;
 import java.util.List;
 
@@ -53,12 +57,32 @@ public class AgendamentoService {
         agendamento.setValor(form.getValor());
         agendamento.setFormaPagamento(form.getFormaPagamento());
         agendamento.setStatusPagamento(form.getStatusPagamento());
-        agendamento.setDataAgendamento(LocalDateTime.now());
+        agendamento.setDataAgendamento(form.getDataAgendamento());
         agendamento.setPet(petOpt.get());
         agendamento.setBaia(baiaOpt.get());
         agendamento.setUser(userOpt.get());
 
         return agendamentoRepository.save(agendamento);
+    }
+
+    public FinanceiroEntradaDTO getTotaisPagos() {
+        LocalDateTime hojeInicio = LocalDate.now().atStartOfDay();
+        LocalDateTime hojeFim = hojeInicio.plusDays(1).minusSeconds(1);
+
+        LocalDateTime inicioMes = LocalDate.now().withDayOfMonth(1).atStartOfDay();
+        LocalDateTime fimMes = inicioMes.plusMonths(1).minusSeconds(1);
+
+        LocalDate hoje = LocalDate.now();
+        DayOfWeek primeiroDiaSemana = DayOfWeek.SUNDAY;
+        LocalDate inicioSemana = hoje.with(TemporalAdjusters.previousOrSame(primeiroDiaSemana));
+        LocalDate fimSemana = inicioSemana.plusDays(6);
+
+        return new FinanceiroEntradaDTO(
+                agendamentoRepository.getTotalPago(),
+                agendamentoRepository.getTotalPagoEntreDatas(inicioMes, fimMes),
+                agendamentoRepository.getTotalPagoEntreDatas(inicioSemana.atStartOfDay(), fimSemana.atTime(23, 59, 59)),
+                agendamentoRepository.getTotalPagoEntreDatas(hojeInicio, hojeFim)
+        );
     }
 
 
