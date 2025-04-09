@@ -3,6 +3,7 @@ package com.hostpet.hostpet.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -92,5 +93,8 @@ public class Pet {
 
     public void setAgendamentos(List<Agendamento> agendamentos) {
         this.agendamentos = agendamentos;
+    }
+
+    public void setDtNascimento(@NotNull(message = "A data de nascimento é obrigatória") LocalDate dtNascimento) {
     }
 }
