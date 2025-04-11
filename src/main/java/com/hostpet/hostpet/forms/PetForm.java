@@ -1,5 +1,6 @@
 package com.hostpet.hostpet.forms;
 
+import com.hostpet.hostpet.enums.Sexo;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -13,9 +14,8 @@ public class PetForm {
     @Size(max = 100, message = "O nome deve ter no máximo 100 caracteres")
     public String nome;
 
-    @NotBlank(message = "O sexo é obrigatório")
-    @Size(max = 30, message = "O sexo deve ter no máximo 30 caracteres")
-    public String sexo;
+    @NotNull(message = "O sexo é obrigatório")
+    public Sexo sexo;
 
     @NotBlank(message = "A raça do pet é obrigatório")
     public String racaPet;

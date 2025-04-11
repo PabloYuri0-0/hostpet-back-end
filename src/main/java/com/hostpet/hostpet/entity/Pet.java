@@ -2,6 +2,7 @@ package com.hostpet.hostpet.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hostpet.hostpet.enums.Sexo;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,7 +25,8 @@ public class Pet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nome;
-    private String sexo;
+    @Enumerated(EnumType.STRING)
+    private Sexo sexo;
     private String racaPet;
     private String observacoes;
     private LocalDate dtNascimento;
@@ -62,13 +64,6 @@ public class Pet {
         this.nome = nome;
     }
 
-    public String getSexo() {
-        return sexo;
-    }
-
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
-    }
 
     public String getRacaPet() {
         return racaPet;
