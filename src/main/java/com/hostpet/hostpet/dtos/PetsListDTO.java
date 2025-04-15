@@ -1,15 +1,18 @@
 package com.hostpet.hostpet.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hostpet.hostpet.entity.Pet;
+import com.hostpet.hostpet.enums.Sexo;
 
 import java.time.LocalDate;
 
 public class PetsListDTO {
     private Integer id;
     private String nome;
-    private String sexo;
+    private Sexo sexo;
     private String racaPet;
     private String observacoes;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dtNascimento;
     private Long clienteId;
     private String nomeDono;
@@ -48,11 +51,11 @@ public class PetsListDTO {
         this.nome = nome;
     }
 
-    public String getSexo() {
+    public Sexo getSexo() {
         return sexo;
     }
 
-    public void setSexo(String sexo) {
+    public void setSexo(Sexo sexo) {
         this.sexo = sexo;
     }
 

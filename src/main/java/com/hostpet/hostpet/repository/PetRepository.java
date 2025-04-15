@@ -1,6 +1,7 @@
 package com.hostpet.hostpet.repository;
 
 import com.hostpet.hostpet.entity.Pet;
+import com.hostpet.hostpet.enums.Sexo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,7 +17,7 @@ public interface PetRepository extends JpaRepository<Pet, Integer> {
             "AND (:sexo IS NULL OR p.sexo = :sexo)")
     List<Pet> findPetsWithFilters(@Param("userId") Long userId,
                        @Param("nome") String nome,
-                       @Param("sexo") String sexo);
+                       @Param("sexo") Sexo sexo);
 
     
 }

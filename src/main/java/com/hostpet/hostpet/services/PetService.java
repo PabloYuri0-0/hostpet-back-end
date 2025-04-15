@@ -3,6 +3,7 @@ package com.hostpet.hostpet.services;
 import com.hostpet.hostpet.dtos.PetsListDTO;
 import com.hostpet.hostpet.entity.Cliente;
 import com.hostpet.hostpet.entity.Pet;
+import com.hostpet.hostpet.enums.Sexo;
 import com.hostpet.hostpet.forms.PetForm;
 import com.hostpet.hostpet.repository.PetRepository;
 import com.hostpet.hostpet.repository.IClienteRepository;
@@ -26,7 +27,7 @@ public class PetService {
         return petRepository.findAll();
     }
 
-    public List<PetsListDTO> getPetsByUser(Long userId, String nome, String sexo) {
+    public List<PetsListDTO> getPetsByUser(Long userId, String nome, Sexo sexo) {
         List<Pet> pets = petRepository.findPetsWithFilters(userId, nome, sexo);
         return pets.stream()
                 .map(PetsListDTO::new)
