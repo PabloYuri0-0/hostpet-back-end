@@ -2,6 +2,7 @@ package com.hostpet.hostpet.controller;
 
 import com.hostpet.hostpet.dtos.PetsListDTO;
 import com.hostpet.hostpet.entity.Pet;
+import com.hostpet.hostpet.enums.Sexo;
 import com.hostpet.hostpet.forms.PetForm;
 import com.hostpet.hostpet.services.PetService;
 import jakarta.validation.Valid;
@@ -36,7 +37,7 @@ public class PetController {
     @GetMapping
     public ResponseEntity<List<PetsListDTO>> listarPetsByUser(@RequestParam(required = true) Long userId,
                                                               @RequestParam(required = false) String nome,
-                                                              @RequestParam(required = false) String sexo) {
+                                                              @RequestParam(required = false) Sexo sexo) {
 
         return ResponseEntity.ok(petService.getPetsByUser(userId,nome,sexo));
     }
