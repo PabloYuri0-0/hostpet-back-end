@@ -14,6 +14,8 @@ public class PetsListDTO {
     private Long clienteId;
     private String nomeDono;
 
+    private String telefoneDono;
+
     public PetsListDTO() {
     }
 
@@ -26,6 +28,7 @@ public class PetsListDTO {
         this.dtNascimento = pet.getDtNascimento();
         this.clienteId = pet.getCliente().getId();
         this.nomeDono = pet.getCliente().getNome();
+        this.telefoneDono = pet.getCliente().getTelefone();
     }
 
     // Getters and Setters
@@ -92,4 +95,8 @@ public class PetsListDTO {
     public void setNomeDono(String nomeDono) {
         this.nomeDono = nomeDono;
     }
+
+    public String getTelefoneDono() {return telefoneDono;}
+
+    public void setTelefoneDono(String telefoneDono) {this.telefoneDono = telefoneDono;}
 }

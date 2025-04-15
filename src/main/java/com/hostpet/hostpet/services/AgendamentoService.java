@@ -57,7 +57,7 @@ public class AgendamentoService {
         agendamento.setValor(form.getValor());
         agendamento.setFormaPagamento(form.getFormaPagamento());
         agendamento.setStatusPagamento(form.getStatusPagamento());
-        agendamento.setDataAgendamento(form.getDataAgendamento());
+        agendamento.setDataAgendamento(LocalDateTime.now());
         agendamento.setPet(petOpt.get());
         agendamento.setBaia(baiaOpt.get());
         agendamento.setUser(userOpt.get());
