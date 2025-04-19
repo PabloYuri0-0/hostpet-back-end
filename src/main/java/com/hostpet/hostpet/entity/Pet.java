@@ -96,4 +96,12 @@ public class Pet {
     public void setDtNascimento(LocalDate dtNascimento) {
         this.dtNascimento = dtNascimento;
     }
+
+    public void setSexo(Sexo sexo) {
+        this.sexo = sexo;
+    }
+
+    public Sexo getSexo() {
+        return sexo;
+    }
 }
