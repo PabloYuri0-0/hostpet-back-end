@@ -1,5 +1,6 @@
 package com.hostpet.hostpet.services;
 
+import com.hostpet.hostpet.dtos.BaiaStatusDTO;
 import com.hostpet.hostpet.entity.Baia;
 import com.hostpet.hostpet.entity.User;
 import com.hostpet.hostpet.exceptions.CustomException;
@@ -31,6 +32,17 @@ public class BaiaService {
         baia.setDescricao(form.descricao);
 
         return baiaRepository.save(baia);
+    }
+
+    public BaiaStatusDTO calcularTotaisBaia(Long userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new IllegalArgumentException("Usuário não encontrado.");
+        }
+
+        long livres = baiaRepository.countByUserIdAndStatus(userId, "Livre");
+        long ocupadas = baiaRepository.countByUserIdAndStatus(userId, "Ocupada");
+
+        return new BaiaStatusDTO(livres, ocupadas);
     }
 
     // Método para listar todas as baias de um user

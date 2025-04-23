@@ -1,5 +1,6 @@
 package com.hostpet.hostpet.controller;
 
+import com.hostpet.hostpet.dtos.BaiaStatusDTO;
 import com.hostpet.hostpet.entity.Baia;
 import com.hostpet.hostpet.forms.BaiaForm;
 import com.hostpet.hostpet.services.BaiaService;
@@ -36,5 +37,10 @@ public class BaiaController {
     public ResponseEntity<Void> excluirBaia(@PathVariable Integer id) {
         baiaService.deleteBaia(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/status/{userId}")
+    public ResponseEntity<BaiaStatusDTO> getTotaisPorStatus(@PathVariable Long userId) {
+        return ResponseEntity.ok(baiaService.calcularTotaisBaia(userId));
     }
 }
