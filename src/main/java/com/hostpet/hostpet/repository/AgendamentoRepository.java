@@ -26,4 +26,7 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Intege
 
     @Query("SELECT COALESCE(SUM(a.valor), 0) FROM Agendamento a WHERE a.statusPagamento = 'PAGO' AND a.dataAgendamento BETWEEN :inicio AND :fim")
     BigDecimal getTotalPagoEntreDatas(@Param("inicio") LocalDateTime inicio, @Param("fim") LocalDateTime fim);
+
+//    @Query("SELECT COUNT(a) FROM Agendamento a WHERE  )
+//    Integer getCheckinsHoje();
 }
