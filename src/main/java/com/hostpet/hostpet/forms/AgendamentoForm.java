@@ -1,6 +1,8 @@
 package com.hostpet.hostpet.forms;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.hostpet.hostpet.enums.FormaPagamento;
+import com.hostpet.hostpet.enums.StatusPagamento;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -23,15 +25,8 @@ public class AgendamentoForm {
     @NotNull(message = "O valor do agendamento é obrigatório")
     private BigDecimal valor;
 
-    @NotBlank(message = "A forma de pagamento é obrigatória")
-    @Size(max = 50, message = "A forma de pagamento deve ter no máximo 50 caracteres")
-    private String formaPagamento;
-
-    @NotBlank(message = "O status de pagamento é obrigatório")
-    @Size(max = 50, message = "O status de pagamento deve ter no máximo 50 caracteres")
-    private String statusPagamento;
-
-
+    @NotNull(message = "A forma de pagamento é obrigatória")
+    private FormaPagamento formaPagamento;
 
     @NotNull(message = "O id do pet é obrigatório")
     private Integer idPet;
@@ -42,8 +37,14 @@ public class AgendamentoForm {
     @NotNull(message = "O id do usuário é obrigatório")
     private Long userId;
 
-    // Getters and Setters
 
+    public FormaPagamento getFormaPagamento() {
+        return formaPagamento;
+    }
+
+    public void setFormaPagamento(FormaPagamento formaPagamento) {
+        this.formaPagamento = formaPagamento;
+    }
 
     public LocalDateTime getDataHoraInicio() {
         return dataHoraInicio;
@@ -68,23 +69,6 @@ public class AgendamentoForm {
     public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
-
-    public String getFormaPagamento() {
-        return formaPagamento;
-    }
-
-    public void setFormaPagamento(String formaPagamento) {
-        this.formaPagamento = formaPagamento;
-    }
-
-    public String getStatusPagamento() {
-        return statusPagamento;
-    }
-
-    public void setStatusPagamento(String statusPagamento) {
-        this.statusPagamento = statusPagamento;
-    }
-
 
     public Integer getIdPet() {
         return idPet;
