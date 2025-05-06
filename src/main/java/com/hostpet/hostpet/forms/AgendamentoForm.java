@@ -21,7 +21,6 @@ public class AgendamentoForm {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime dataHoraFim;
 
-
     @NotNull(message = "O valor do agendamento é obrigatório")
     private BigDecimal valor;
 
