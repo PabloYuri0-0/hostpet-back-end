@@ -5,6 +5,7 @@ import com.hostpet.hostpet.entity.Agendamento;
 import com.hostpet.hostpet.entity.Baia;
 import com.hostpet.hostpet.entity.Pet;
 import com.hostpet.hostpet.entity.User;
+import com.hostpet.hostpet.enums.StatusPagamento;
 import com.hostpet.hostpet.forms.AgendamentoForm;
 import com.hostpet.hostpet.repository.AgendamentoRepository;
 import com.hostpet.hostpet.repository.BaiaRepository;
@@ -55,8 +56,8 @@ public class AgendamentoService {
         agendamento.setDataHoraInicio(form.getDataHoraInicio());
         agendamento.setDataHoraFim(form.getDataHoraFim());
         agendamento.setValor(form.getValor());
-        agendamento.setFormaPagamento(form.getFormaPagamento());
-        agendamento.setStatusPagamento(form.getStatusPagamento());
+        agendamento.setFormaPagamento(form.getFormaPagamento().toString());
+        agendamento.setStatusPagamento(StatusPagamento.PENDENTE.toString());
         agendamento.setDataAgendamento(LocalDateTime.now());
         agendamento.setPet(petOpt.get());
         agendamento.setBaia(baiaOpt.get());
