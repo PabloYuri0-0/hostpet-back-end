@@ -20,9 +20,9 @@ public class Baia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String limpeza = "Limpa";
+    private String limpeza = "LIMPA";
     private String descricao;
-    private String status = "Livre";
+    private String status = "LIVRE";
 
     @OneToMany(mappedBy = "baia", cascade = CascadeType.ALL)
     @JsonIgnore

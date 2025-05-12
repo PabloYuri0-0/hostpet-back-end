@@ -27,6 +27,7 @@ public class Agendamento {
     private String formaPagamento = "";
     private String statusPagamento = "";
     private LocalDateTime dataAgendamento;
+    private LocalDateTime checkin;
 
     @ManyToOne
     @JoinColumn(name = "id_pet")
@@ -121,4 +122,8 @@ public class Agendamento {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public LocalDateTime getCheckin() { return checkin;}
+
+    public void setCheckin(LocalDateTime checkin) {this.checkin = checkin;}
 }
