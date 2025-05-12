@@ -106,8 +106,8 @@ public class AgendamentoService {
         agendamento.setCheckin(LocalDateTime.now());
         agendamento.setStatusPagamento(StatusPagamento.PAGO.toString());
 
-        baia.setStatus("OCUPADO");
-        baia.setLimpeza("SUJO");
+        baia.setStatus("OCUPADA");
+        baia.setLimpeza("SUJA");
 
         baiaRepository.save(baia);
         return agendamentoRepository.save(agendamento);
