@@ -48,6 +48,18 @@ public class BaiaService {
         return new BaiaStatusDTO(livres, ocupadas, limpas, sujas);
     }
 
+    public Baia atualizarStatusLimpeza(Integer baiaId) {
+        Baia baia = baiaRepository.findById(baiaId).orElseThrow(() ->
+                new CustomException("Baia não encontrada", HttpStatus.NOT_FOUND)
+        );
+
+        // Alterando o status de limpeza para 'LIMPA'
+        baia.setLimpeza("LIMPA");
+
+        // Salvando a baia atualizada
+        return baiaRepository.save(baia);
+    }
+
 
     // Método para listar todas as baias de um user
     public List<Baia> getAllBaiasByUser(Long userId) {

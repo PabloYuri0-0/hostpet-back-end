@@ -28,6 +28,8 @@ public class Agendamento {
     private String statusPagamento = "";
     private LocalDateTime dataAgendamento;
     private LocalDateTime checkin;
+    private LocalDateTime checkOut;
+
 
     @ManyToOne
     @JoinColumn(name = "id_pet")
@@ -46,6 +48,8 @@ public class Agendamento {
     public Integer getId() {
         return id;
     }
+
+
 
     public void setId(Integer id) {
         this.id = id;
@@ -126,4 +130,8 @@ public class Agendamento {
     public LocalDateTime getCheckin() { return checkin;}
 
     public void setCheckin(LocalDateTime checkin) {this.checkin = checkin;}
+
+    public LocalDateTime getCheckOut() { return checkOut;}
+
+    public void setCheckOut(LocalDateTime checkOut) {this.checkOut = checkOut;}
 }

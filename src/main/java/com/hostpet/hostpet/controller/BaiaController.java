@@ -32,6 +32,12 @@ public class BaiaController {
         return ResponseEntity.ok(baias);
     }
 
+    @PostMapping("/limpeza/{baiaId}")
+    public ResponseEntity<Baia> atualizarStatusLimpeza(@PathVariable Integer baiaId) {
+        Baia baiaAtualizada = baiaService.atualizarStatusLimpeza(baiaId);
+        return ResponseEntity.ok(baiaAtualizada);
+    }
+
     // Endpoint para excluir uma baia
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluirBaia(@PathVariable Integer id) {

@@ -41,6 +41,12 @@ public class AgendamentoController {
         return ResponseEntity.ok(agendamento);
     }
 
+    @PostMapping("/checkout/{id}")
+    public ResponseEntity<Agendamento> realizarCheckOut(@PathVariable Integer id) {
+        Agendamento agendamento = agendamentoService.realizarCheckOut(id);
+        return ResponseEntity.ok(agendamento);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Agendamento> buscarAgendamentoPorId(@PathVariable Integer id) {
         Agendamento agendamento = agendamentoService.buscarAgendamentoPorId(id);
