@@ -113,8 +113,23 @@ public class AgendamentoService {
         return agendamentoRepository.save(agendamento);
     }
 
+    public Agendamento realizarCheckOut(Integer agendamentoId) {
+        Agendamento agendamento = agendamentoRepository.findById(agendamentoId)
+                .orElseThrow(() -> new IllegalArgumentException("Agendamento não encontrado"));
 
 
+        agendamento.setCheckOut(LocalDateTime.now());
+
+
+        Baia baia = agendamento.getBaia();
+        if (baia != null) {
+            baia.setStatus("LIVRE");
+
+            baiaRepository.save(baia);
+        }
+
+        return agendamentoRepository.save(agendamento);
+    }
 
 
 
@@ -131,7 +146,13 @@ public class AgendamentoService {
                 .orElseThrow(() -> new IllegalArgumentException("Agendamento não encontrado"));
     }
 
-    public void excluirAgendamento(Integer id) {
-        agendamentoRepository.deleteById(id);
+
+
+    public void excluirAgendamento(Integer agendamentoId) {
+        Agendamento agendamento = agendamentoRepository.findById(agendamentoId)
+                .orElseThrow(() -> new IllegalArgumentException("Agendamento não encontrado"));
+
+
+        agendamentoRepository.delete(agendamento);
     }
 }
