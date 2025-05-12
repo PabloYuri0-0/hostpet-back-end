@@ -88,6 +88,36 @@ public class AgendamentoService {
 
 
 
+    public Agendamento realizarCheckin(Integer agendamentoId) {
+        Optional<Agendamento> agendamentoOpt = agendamentoRepository.findById(agendamentoId);
+        if (agendamentoOpt.isEmpty()) {
+            throw new IllegalArgumentException("Agendamento não encontrado.");
+        }
+
+        Agendamento agendamento = agendamentoOpt.get();
+
+        // Verifica se a baia vinculada existe
+        Baia baia = agendamento.getBaia();
+        if (baia == null) {
+            throw new IllegalStateException("Baia vinculada ao agendamento não encontrada.");
+        }
+
+        // Faz as alterações apenas depois das validações
+        agendamento.setCheckin(LocalDateTime.now());
+        agendamento.setStatusPagamento(StatusPagamento.PAGO.toString());
+
+        baia.setStatus("OCUPADO");
+        baia.setLimpeza("SUJO");
+
+        baiaRepository.save(baia);
+        return agendamentoRepository.save(agendamento);
+    }
+
+
+
+
+
+
     public List<Agendamento> listAgendamentosByUser(Long userId) {
         boolean usuarioExiste = userRepository.existsById(userId);
         if (!usuarioExiste) {

@@ -35,6 +35,12 @@ public class AgendamentoController {
         return ResponseEntity.ok(agendamentoService.getTotaisPagos());
     }
 
+    @PostMapping("/checkin/{id}")
+    public ResponseEntity<Agendamento> realizarCheckin(@PathVariable Integer id) {
+        Agendamento agendamento = agendamentoService.realizarCheckin(id);
+        return ResponseEntity.ok(agendamento);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Agendamento> buscarAgendamentoPorId(@PathVariable Integer id) {
         Agendamento agendamento = agendamentoService.buscarAgendamentoPorId(id);

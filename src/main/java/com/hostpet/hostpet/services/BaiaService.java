@@ -39,11 +39,15 @@ public class BaiaService {
             throw new IllegalArgumentException("Usuário não encontrado.");
         }
 
-        long livres = baiaRepository.countByUserIdAndStatus(userId, "Livre");
-        long ocupadas = baiaRepository.countByUserIdAndStatus(userId, "Ocupada");
+        long livres = baiaRepository.countByUserIdAndStatus(userId, "LIVRE");
+        long ocupadas = baiaRepository.countByUserIdAndStatus(userId, "OCUPADA");
+        long limpas = baiaRepository.countByUserIdAndLimpeza(userId, "LIMPA");
+        long sujas = baiaRepository.countByUserIdAndLimpeza(userId, "SUJA");
 
-        return new BaiaStatusDTO(livres, ocupadas);
+
+        return new BaiaStatusDTO(livres, ocupadas, limpas, sujas);
     }
+
 
     // Método para listar todas as baias de um user
     public List<Baia> getAllBaiasByUser(Long userId) {
