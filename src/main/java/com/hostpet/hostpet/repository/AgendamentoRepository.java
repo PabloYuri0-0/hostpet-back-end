@@ -36,4 +36,15 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Intege
 
     @Query("SELECT COUNT(a) FROM Agendamento a WHERE a.dataHoraInicio >= :start AND a.dataHoraInicio < :end AND a.user.id = :userId")
     Integer getTotalHospedadoHotel(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end, @Param("userId") Long userId);
+
+    @Query("SELECT COUNT(DISTINCT a.baia.id) " +
+            "FROM Agendamento a " +
+            "WHERE a.user.id = :userId " +
+            "AND a.dataHoraInicio <= :fim " +
+            "AND a.dataHoraFim >= :inicio")
+    int countBaiasOcupadasEntreDatas(
+            @Param("userId") Long userId,
+            @Param("inicio") LocalDateTime inicio,
+            @Param("fim") LocalDateTime fim
+    );
 }

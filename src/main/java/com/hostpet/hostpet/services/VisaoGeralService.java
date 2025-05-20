@@ -1,5 +1,6 @@
 package com.hostpet.hostpet.services;
 
+import com.hostpet.hostpet.dtos.OcupacaoMensalDTO;
 import com.hostpet.hostpet.dtos.VisaoGeralDTO;
 import com.hostpet.hostpet.repository.AgendamentoRepository;
 import com.hostpet.hostpet.repository.BaiaRepository;
@@ -8,6 +9,13 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Month;
+import java.time.format.TextStyle;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
 
 @Service
 public class VisaoGeralService {
@@ -39,4 +47,32 @@ public class VisaoGeralService {
         double porcentagem = (countBaiasOcupadas * 100.0) / countBaias;
         return Math.round(porcentagem);
     }
+
+    public List<OcupacaoMensalDTO> getEstatisticasMensaisOcupacao(Long userId, int ano) {
+        List<OcupacaoMensalDTO> estatisticas = new ArrayList<>();
+
+        int totalBaias = baiaRepository.countBaiasTotais(userId);
+        if (totalBaias == 0) return Collections.emptyList();
+
+        for (int mes = 1; mes <= 12; mes++) {
+            LocalDate inicioMes = LocalDate.of(ano, mes, 1);
+            LocalDate fimMes = inicioMes.withDayOfMonth(inicioMes.lengthOfMonth());
+
+            int baiasOcupadas = agendamentoRepository.countBaiasOcupadasEntreDatas(
+                    userId,
+                    inicioMes.atStartOfDay(),
+                    fimMes.atTime(LocalTime.MAX)
+            );
+
+            long percentual = Math.round((baiasOcupadas * 100.0) / totalBaias);
+            estatisticas.add(new OcupacaoMensalDTO(getNomeMes(mes), percentual));
+        }
+
+        return estatisticas;
+    }
+
+    private String getNomeMes(int mes) {
+        return Month.of(mes).getDisplayName(TextStyle.SHORT, new Locale("pt", "BR"));
+    }
+
 }
