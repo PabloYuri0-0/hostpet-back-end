@@ -19,15 +19,24 @@ public class VisaoGeralService {
     private BaiaRepository baiaRepository;
 
 
-    public VisaoGeralDTO visaoGeral(){
+    public VisaoGeralDTO visaoGeral(Long userId){
         LocalDateTime start = LocalDate.now().atStartOfDay();
         LocalDateTime end = start.plusDays(1);
-        Integer countCheckIn = agendamentoRepository.getCheckinsHoje(start, end);
-        Integer countCheckOut = agendamentoRepository.getCheckoutsHoje(start, end);
-        Integer countTotalHospedadoHotel = agendamentoRepository.getTotalHospedadoHotel(start, end);
-        Integer countBaiasDisponiveis = baiaRepository.countBaiasDisponiveis(LocalDateTime.now());
-        Integer countBaiasOcupadas = baiaRepository.countBaiasOcupadas(LocalDateTime.now());
+        Integer countCheckIn = agendamentoRepository.getCheckinsHoje(start, end, userId);
+        Integer countCheckOut = agendamentoRepository.getCheckoutsHoje(start, end,userId);
+        Integer countTotalHospedadoHotel = agendamentoRepository.getTotalHospedadoHotel(start, end,userId);
+        Integer countBaiasDisponiveis = baiaRepository.countBaiasDisponiveis(LocalDateTime.now(), userId);
+        Integer countBaiasOcupadas = baiaRepository.countBaiasOcupadas(LocalDateTime.now(),userId);
 
         return new VisaoGeralDTO(countCheckIn, countCheckOut, countTotalHospedadoHotel, countBaiasDisponiveis, countBaiasOcupadas);
+    }
+
+
+    public Long  statusOcupacaoHotelByUser(Long userId){
+        Integer countBaias = baiaRepository.countBaiasTotais(userId);
+        Integer countBaiasOcupadas = baiaRepository.countBaiasOcupadas(LocalDateTime.now(),userId);
+
+        double porcentagem = (countBaiasOcupadas * 100.0) / countBaias;
+        return Math.round(porcentagem);
     }
 }
