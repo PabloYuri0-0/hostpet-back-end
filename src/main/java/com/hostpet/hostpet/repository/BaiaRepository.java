@@ -1,6 +1,7 @@
 package com.hostpet.hostpet.repository;
 
 import com.hostpet.hostpet.entity.Baia;
+import jakarta.websocket.server.PathParam;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -26,13 +27,14 @@ public interface BaiaRepository extends JpaRepository<Baia, Integer> {
         SELECT COUNT(b) 
         FROM Baia b 
         WHERE b.status = 'LIVRE'
+        AND b.user.id = :userId
         AND NOT EXISTS (
             SELECT 1 FROM Agendamento a 
             WHERE a.baia = b 
             AND :now BETWEEN a.dataHoraInicio AND a.dataHoraFim
         )
     """)
-    Integer countBaiasDisponiveis(@Param("now") LocalDateTime now);
+    Integer countBaiasDisponiveis(@Param("now") LocalDateTime now, @PathParam("userId") Long userId);
 
     // Contar baias ocupadas (existe agendamento ativo no momento)
     @Query("""
@@ -42,7 +44,16 @@ public interface BaiaRepository extends JpaRepository<Baia, Integer> {
             SELECT 1 FROM Agendamento a 
             WHERE a.baia = b 
             AND :now BETWEEN a.dataHoraInicio AND a.dataHoraFim
-        )
+        ) AND b.user.id = :userId
     """)
-    Integer countBaiasOcupadas(@Param("now") LocalDateTime now);
+    Integer countBaiasOcupadas(@Param("now") LocalDateTime now, @PathParam("userId") Long userId);
+
+    @Query("""
+        SELECT COUNT(b) 
+        FROM Baia b 
+        WHERE b.user.id = :userId
+    """)
+    Integer countBaiasTotais(@PathParam("userId") Long userId);
+
+
 }
