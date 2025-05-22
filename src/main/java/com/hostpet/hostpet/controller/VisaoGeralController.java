@@ -5,10 +5,7 @@ import com.hostpet.hostpet.dtos.VisaoGeralDTO;
 import com.hostpet.hostpet.services.VisaoGeralService;
 import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,12 +19,12 @@ public class VisaoGeralController {
     private VisaoGeralService visaoGeralService;
 
     @GetMapping("/{userId}")
-    public VisaoGeralDTO visaoGeral(@PathParam("userId") Long userId ) {
+    public VisaoGeralDTO visaoGeral(@PathVariable("userId") Long userId ) {
         return visaoGeralService.visaoGeral(userId);
     }
 
     @GetMapping("/status-ocupacao/{userId}")
-    public Long statusOcupacaoHotelByUser(@PathParam("userId") Long userId){
+    public Long statusOcupacaoHotelByUser(@PathVariable("userId") Long userId){
         return  visaoGeralService.statusOcupacaoHotelByUser(userId);
     }
     @GetMapping("/ocupacao-mensal")
