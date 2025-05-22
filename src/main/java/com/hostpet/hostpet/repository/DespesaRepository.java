@@ -18,4 +18,8 @@ public interface DespesaRepository extends JpaRepository<Despesa, Long> {
 
     @Query("SELECT COALESCE(SUM(d.valor), 0) FROM Despesa d WHERE d.user.id = :userId AND d.dataDespesa BETWEEN :inicio AND :fim")
     BigDecimal getTotalEntreDatas(@Param("userId") Long userId, @Param("inicio") LocalDateTime inicio, @Param("fim") LocalDateTime fim);
+
+
+    @Query("SELECT COALESCE(SUM(d.valor), 0) FROM Despesa d WHERE d.user.id = :userId ")
+    BigDecimal getTotalDespesas(@Param("userId") Long userId);
 }

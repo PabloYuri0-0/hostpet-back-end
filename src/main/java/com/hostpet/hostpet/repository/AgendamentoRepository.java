@@ -47,4 +47,18 @@ public interface AgendamentoRepository extends JpaRepository<Agendamento, Intege
             @Param("inicio") LocalDateTime inicio,
             @Param("fim") LocalDateTime fim
     );
+
+
+    @Query(
+            """
+            SELECT COALESCE(SUM(a.valor), 0)
+            FROM Agendamento a
+            WHERE a.user.id = :userId
+            """
+    )
+    BigDecimal getTotalEntrada (@Param("userId") Long userId);
+
+
+
+
 }
