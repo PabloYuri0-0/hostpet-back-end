@@ -1,12 +1,15 @@
 package com.hostpet.hostpet.services;
 
+import com.hostpet.hostpet.dtos.DetalhesSaldo;
 import com.hostpet.hostpet.dtos.OcupacaoMensalDTO;
 import com.hostpet.hostpet.dtos.VisaoGeralDTO;
 import com.hostpet.hostpet.repository.AgendamentoRepository;
 import com.hostpet.hostpet.repository.BaiaRepository;
+import com.hostpet.hostpet.repository.DespesaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -23,6 +26,8 @@ public class VisaoGeralService {
     @Autowired
     private AgendamentoRepository agendamentoRepository;
 
+    @Autowired
+    private DespesaRepository despesaRepository;
     @Autowired
     private BaiaRepository baiaRepository;
 
@@ -75,4 +80,17 @@ public class VisaoGeralService {
         return Month.of(mes).getDisplayName(TextStyle.SHORT, new Locale("pt", "BR"));
     }
 
+
+    public DetalhesSaldo getDetalhesSaldo(Long userId) {
+        BigDecimal entrada = agendamentoRepository.getTotalEntrada(userId);
+        BigDecimal despesas = despesaRepository.getTotalDespesas(userId);
+        BigDecimal saldo = entrada.subtract(despesas);
+
+         DetalhesSaldo detalhesSaldo = new DetalhesSaldo(
+                 saldo,
+                 entrada,
+                 despesas
+         );
+        return detalhesSaldo;
+    }
 }

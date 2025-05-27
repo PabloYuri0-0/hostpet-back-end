@@ -1,5 +1,6 @@
 package com.hostpet.hostpet.controller;
 
+import com.hostpet.hostpet.dtos.DetalhesSaldo;
 import com.hostpet.hostpet.dtos.OcupacaoMensalDTO;
 import com.hostpet.hostpet.dtos.VisaoGeralDTO;
 import com.hostpet.hostpet.services.VisaoGeralService;
@@ -36,6 +37,12 @@ public class VisaoGeralController {
             ano = LocalDate.now().getYear(); // define ano atual como padrão
         }
         return visaoGeralService.getEstatisticasMensaisOcupacao(userId, ano);
+    }
+
+
+    @GetMapping("/detalhes-saldo/{userId}")
+    public DetalhesSaldo getDetalhesSaldo(@PathVariable("userId") Long userId) {
+        return visaoGeralService.getDetalhesSaldo(userId);
     }
 
 
