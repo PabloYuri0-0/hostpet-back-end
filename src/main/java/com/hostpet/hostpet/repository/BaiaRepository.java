@@ -32,6 +32,7 @@ public interface BaiaRepository extends JpaRepository<Baia, Integer> {
             SELECT 1 FROM Agendamento a 
             WHERE a.baia = b 
             AND :now BETWEEN a.dataHoraInicio AND a.dataHoraFim
+            AND a.checkOut IS NULL
         )
     """)
     Integer countBaiasDisponiveis(@Param("now") LocalDateTime now, @PathParam("userId") Long userId);
@@ -44,7 +45,9 @@ public interface BaiaRepository extends JpaRepository<Baia, Integer> {
             SELECT 1 FROM Agendamento a 
             WHERE a.baia = b 
             AND :now BETWEEN a.dataHoraInicio AND a.dataHoraFim
-        ) AND b.user.id = :userId
+            
+        ) AND b.status = 'OCUPADA'
+        AND b.user.id = :userId
     """)
     Integer countBaiasOcupadas(@Param("now") LocalDateTime now, @PathParam("userId") Long userId);
 
